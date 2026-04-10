@@ -17,13 +17,21 @@ def lei_de_ohm():
 
         cont = 0
         nulo = ""
+        caracter = False
 
         for i in valores:
+            if valores[i] == "":
+                    cont += 1
+                    nulo = i
+                    continue
             try:
                 valores[i] = float(valores[i])
             except:
-                cont += 1
-                nulo = i
+                print(f"Esse tipo de carácter é inválido: {valores[i]}")
+                caracter = True
+            
+        if caracter:
+            continue
 
         if cont < 1:
             print("Você digitou todos os valores!")
@@ -84,9 +92,10 @@ def equilibrio_de_corrente():
             continue
 
         diferenca = valores["corrente de entrada"] - valores['soma das correntes de saída']
-        diferenca = float(f"{diferenca:.2f}")
+        string_diferenca = str(diferenca)
+        diferenca = float(string_diferenca[:len(string_diferenca)-1])
 
-        if diferenca <= 0.01 and diferenca >= -0.01:
+        if abs(diferenca) <= 0.01:
             print("Nó equilibrado")
         else:
             print("Nó não equilibrado")
@@ -126,9 +135,10 @@ def equilibrio_de_tensao():
             continue
 
         diferenca = valores["soma de tensões"] - valores['soma das quedas de tensão']
-        diferenca = float(f"{diferenca:.2f}")
+        string_diferenca = str(diferenca)
+        diferenca = float(string_diferenca[:len(string_diferenca)-1])
 
-        if diferenca <= 0.01 and diferenca >= -0.01:
+        if abs(diferenca) <= 0.01:
             print("Malha equilibrada")
         else:
             print("Malha não equilibrada")
